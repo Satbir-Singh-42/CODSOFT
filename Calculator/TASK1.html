@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <link rel="stylesheet" href="TASK1.css">
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="calc-display" id="calc-display"></div>
+        <div class="calc-buttons">
+            <button class="calc-btn" data-value="7">7</button>
+            <button class="calc-btn" data-value="8">8</button>
+            <button class="calc-btn" data-value="9">9</button>
+            <button class="calc-btn operator" data-value="/">/</button>
+
+            <button class="calc-btn" data-value="4">4</button>
+            <button class="calc-btn" data-value="5">5</button>
+            <button class="calc-btn" data-value="6">6</button>
+            <button class="calc-btn operator" data-value="*">*</button>
+
+            <button class="calc-btn" data-value="1">1</button>
+            <button class="calc-btn" data-value="2">2</button>
+            <button class="calc-btn" data-value="3">3</button>
+            <button class="calc-btn operator" data-value="-">-</button>
+
+            <button class="calc-btn" data-value="0">0</button>
+            <button class="calc-btn" data-value=".">.</button>
+            <button class="calc-btn clear">C</button>
+            <button class="calc-btn operator" data-value="+">+</button>
+
+            <button class="calc-btn equal" id="calc-equal">=</button>
+        </div>
+    </div>
+    <script>
+        const display = document.getElementById('calc-display');
+        const buttons = document.querySelectorAll('.calc-btn');
+        let displayValue = '';
+        let firstValue = '';
+        let operator = '';
+        let secondValue = '';
+        let result = '';
+
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                if (button.classList.contains('operator')) {
+                    firstValue = displayValue;
+                    operator = button.getAttribute('data-value');
+                    displayValue = '';
+                } else if (button.classList.contains('equal')) {
+                    secondValue = displayValue;
+                    switch (operator) {
+                        case '+':
+                            result = parseFloat(firstValue) + parseFloat(secondValue);
+                            break;
+                        case '-':
+                            result = parseFloat(firstValue) - parseFloat(secondValue);
+                            break;
+                        case '*':
+                            result = parseFloat(firstValue) * parseFloat(secondValue);
+                            break;
+                        case '/':
+                            result = parseFloat(firstValue) / parseFloat(secondValue);
+                            break;
+                        default:
+                            result = 'Error';
+                    }
+                    displayValue = result.toString();
+                } else if (button.classList.contains('clear')) {
+                    displayValue = '';
+                    firstValue = '';
+                    operator = '';
+                    secondValue = '';
+                    result = '';
+                } else {
+                    displayValue += button.getAttribute('data-value');
+                }
+                display.innerHTML = displayValue;
+            });
+        });
+    </script>
+</body>
+
+</html>
